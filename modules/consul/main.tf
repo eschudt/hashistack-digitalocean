@@ -1,6 +1,10 @@
 # modules/consul/main.tf
 # Create 2 servers and install consul
 
+variable "bastion_host" {
+  description = "IP of bastion host used for provisioning"
+}
+
 # Create a new Web Droplet in the fra1 region
 resource "digitalocean_droplet" "server1" {
   image              = "ubuntu-16-04-x64"

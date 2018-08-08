@@ -5,6 +5,10 @@ variable "bastion_host" {
   description = "IP of bastion host used for provisioning"
 }
 
+variable "ssh_fingerprint" {
+  description = "SSH fingerprint to enable"
+}
+
 # Create a new Web Droplet in the fra1 region
 resource "digitalocean_droplet" "server1" {
   image              = "ubuntu-16-04-x64"
@@ -12,6 +16,7 @@ resource "digitalocean_droplet" "server1" {
   region             = "fra1"
   size               = "512mb"
   private_networking = true
+  ssh_keys = ["${var.ssh_fingerprint}"]
 
   provisioner "remote-exec" {
     scripts = [

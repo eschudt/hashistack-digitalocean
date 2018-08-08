@@ -26,7 +26,7 @@ resource "digitalocean_droplet" "server1" {
     connection {
       type         = "ssh"
       user         = "root"
-      host         = "${self.ipv4_address_private}"
+      host         = "${self.ipv4_address}"
       bastion_host = "${var.bastion_host}"
       bastion_user = "root"
       agent        = true
@@ -36,11 +36,11 @@ resource "digitalocean_droplet" "server1" {
 
 # Create a new Web Droplet in the lon1 region
 resource "digitalocean_droplet" "server2" {
-image              = "ubuntu-16-04-x64"
-name               = "server2"
-region             = "lon1"
-size               = "512mb"
-private_networking = true
+  image              = "ubuntu-16-04-x64"
+  name               = "server2"
+  region             = "lon1"
+  size               = "512mb"
+  private_networking = true
 
   provisioner "remote-exec" {
     scripts = [
@@ -50,7 +50,7 @@ private_networking = true
     connection {
       type         = "ssh"
       user         = "root"
-      host         = "${self.ipv4_address_private}"
+      host         = "${self.ipv4_address}"
       bastion_host = "${var.bastion_host}"
       bastion_user = "root"
       agent        = true

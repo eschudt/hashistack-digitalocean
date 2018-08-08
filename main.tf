@@ -1,15 +1,14 @@
 # main.tf
 
-variable "do_token" {}
-
 provider "digitalocean" {
   token = "${var.do_token}"
 }
 
-module "gateway" {
-  source = "./modules/gateway"
+module "bastion_host" {
+  source = "./modules/bastion_host"
 }
 
-module "servers" {
-  source = "./modules/servers"
+module "consul" {
+  source = "./modules/consul"
+  bastion_host = "${module.bastion_host.bastion_host_ip}"
 }

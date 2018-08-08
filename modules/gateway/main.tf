@@ -4,7 +4,7 @@
 
 # Create a new Web Droplet in the lon1 region
 resource "digitalocean_droplet" "gateway" {
-  image  = "ubuntu-16-04.4-x64"
+  image  = "ubuntu-16-04-x64"
   name   = "gateway"
   region = "lon1"
   size   = "512mb"
@@ -15,6 +15,12 @@ resource "digitalocean_droplet" "gateway" {
       "${path.root}/scripts/nomad/install_nomad.sh",
       "${path.root}/scripts/docker/install_docker.sh",
     ]
+
+    connection {
+      type     = "ssh"
+      user     = "root"
+      password = "${var.root_password}"
+    }
   }
 }
 
@@ -24,5 +30,5 @@ resource "digitalocean_floating_ip" "gateway" {
   region     = "${digitalocean_droplet.gateway.region}"
 }
 output "public_ip" {
-  value = "${digitalocean_droplet.gateway.ip}"
+  value = "${digitalocean_floating_ip.gateway.ip_address}"
 }

@@ -3,7 +3,7 @@
 
 # Create a new Web Droplet in the fra1 region
 resource "digitalocean_droplet" "server1" {
-  image  = "ubuntu-16-04.4-x64"
+  image  = "ubuntu-16-04-x64"
   name   = "server1"
   region = "fra1"
   size   = "512mb"
@@ -14,5 +14,11 @@ resource "digitalocean_droplet" "server1" {
       "${path.root}/scripts/nomad/install_nomad.sh",
       "${path.root}/scripts/docker/install_docker.sh",
     ]
+    
+    connection {
+      type     = "ssh"
+      user     = "root"
+      password = "${var.root_password}"
+    }
   }
 }

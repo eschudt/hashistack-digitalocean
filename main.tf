@@ -20,5 +20,5 @@ module "client-droplet" {
   source = "./modules/client-droplet"
   #bastion_host = "${module.bastion_host.bastion_host_ip}"
   ssh_fingerprint = "${var.ssh_fingerprint}"
-  client_count = "2"
+  client_count = "1"
 }

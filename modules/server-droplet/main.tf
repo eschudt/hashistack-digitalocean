@@ -21,8 +21,8 @@ resource "digitalocean_droplet" "server1" {
 
   provisioner "remote-exec" {
     scripts = [
-      "${path.root}/scripts/consul/install_consul.sh server",
-      "${path.root}/scripts/nomad/install_nomad.sh server",
+      "${path.root}/scripts/consul/install_consul.sh",
+      "${path.root}/scripts/nomad/install_nomad.sh",
     ]
 
     connection {

@@ -10,3 +10,4 @@ cp nomad /usr/bin/
 #	nomad agent -config client.hcl
 #fi
 echo "Installation of Nomad complete\n"
+exit 0

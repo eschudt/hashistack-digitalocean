@@ -1,19 +1,30 @@
 # terra-nomad-consul
-Terraform to setup a consul cluster interacting with a nomad cluster reached from a gateway using fabio
+Terraform to setup a consul and nomad cluster by building the number of servers and clients specified.
+Uses digital ocean as a provider to create the droplets needed.
 
-terraform init
-terraform plan
-terraform apply
+## Environment variables
+`do_token` - api token for digital ocean which can be found in your DigitalOcean Account under "API"
+`ssh_fingerprint` - the ssh fingerprint to use to connect to your newly created droplets
 
-IMMEDIATE TODO
-- Draw out infra diagram with nomad, consul, fabio and apps
-- Draw out final state with bastion host, firewall, load balancer, static ip and domain name
-- Complete setup of initial state
-- - consul installation
-- - nomad installation
-- -
--
+## Modules
+### client-droplet 
+Create clients and sets up nomand and consul in client mode (TODO instantiating in client mode)
+`client_count` - number of client droplets to create
 
-TODO
-- Better ssh authentication to private servers
--
+### server-droplet 
+Create servers and sets up nomand and consul in server mode (TODO instantiating in server mode)
+`server_count` - number of server droplets to create
+
+## Scripts
+Scripts for installing required software in newly created droplets
+
+### consul
+Downloads consul and copies the binary to the /user/bin directory
+
+### nomad
+Downloads nomad and copies the binary to the /user/bin directory
+
+## How to run
+* terraform init
+* terraform plan
+* terraform apply

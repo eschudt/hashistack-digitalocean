@@ -31,7 +31,7 @@ resource "digitalocean_droplet" "server1" {
       host         = "${self.ipv4_address}"
       #bastion_host = "${var.bastion_host}"
       #bastion_user = "root"
-      agent        = true
+      #agent        = true
     }
   }
 }

@@ -16,7 +16,7 @@ resource "digitalocean_droplet" "server1" {
   image              = "ubuntu-16-04-x64"
   region             = "lon1"
   size               = "512mb"
-  private_networking = false
+  private_networking = true
   ssh_keys = ["${var.ssh_fingerprint}"]
 
   provisioner "remote-exec" {

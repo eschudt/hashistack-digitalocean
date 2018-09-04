@@ -9,6 +9,10 @@ variable "client_count" {
   description = "Number of clients to create"
 }
 
+variable "consul_server_ip" {
+  description = "The ip address of a consul server"
+}
+
 # Create a new Web Droplet in the lon1 region
 resource "digitalocean_droplet" "server1" {
   count              = "${var.client_count}"
@@ -19,19 +23,39 @@ resource "digitalocean_droplet" "server1" {
   private_networking = true
   ssh_keys = ["${var.ssh_fingerprint}"]
 
-  provisioner "remote-exec" {
-    scripts = [
-      "${path.root}/scripts/consul/install_consul.sh",
-      "${path.root}/scripts/nomad/install_nomad.sh",
-    ]
-
-    connection {
-      type         = "ssh"
-      user         = "root"
-      host         = "${self.ipv4_address}"
-      #bastion_host = "${var.bastion_host}"
-      #bastion_user = "root"
-      #agent        = true
-    }
+  connection {
+    type         = "ssh"
+    user         = "root"
+    host         = "${self.ipv4_address}"
   }
+
+  provisioner "file" {
+    source      = "${path.root}/scripts/nomad/client/client2.hcl"
+    destination = "/root/client2.hcl"
+  }
+
+  provisioner "file" {
+    source      = "${path.root}/scripts/consul/install_consul.sh"
+    destination = "/tmp/install_consul.sh"
+  }
+
+  provisioner "file" {
+    source      = "${path.root}/scripts/nomad/install_nomad.sh""
+    destination = "/tmp/install_nomad.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/install_consul.sh",
+      "/tmp/install_consul.sh client ${self.ipv4_address_private} ${var.consul_server_ip}",
+    ]
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/install_nomad.sh",
+      "/tmp/install_nomad.sh client",
+    ]
+  }
+
 }

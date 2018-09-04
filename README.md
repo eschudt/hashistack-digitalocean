@@ -7,11 +7,12 @@ Uses digital ocean as a provider to create the droplets needed.
 * `ssh_fingerprint` - the ssh fingerprint to use to connect to your newly created droplets
 
 ## Modules
-### client-droplet 
+### client-droplet
 * Create clients and sets up nomand and consul in client mode (TODO instantiating in client mode)
 * `client_count` - number of client droplets to create
+* `consul_server_ip` - a consul server ip
 
-### server-droplet 
+### server-droplet
 * Create servers and sets up nomand and consul in server mode (TODO instantiating in server mode)
 * `server_count` - number of server droplets to create
 

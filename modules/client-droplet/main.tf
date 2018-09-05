@@ -23,25 +23,37 @@ resource "digitalocean_droplet" "client1" {
   private_networking = true
   ssh_keys = ["${var.ssh_fingerprint}"]
 
-  connection {
-    type         = "ssh"
-    user         = "root"
-    host         = "${self.ipv4_address}"
-  }
-
   provisioner "file" {
     source      = "${path.root}/scripts/nomad/client/client2.hcl"
     destination = "/root/client2.hcl"
+
+    connection {
+      type         = "ssh"
+      user         = "root"
+      host         = "${self.ipv4_address}"
+    }
   }
 
   provisioner "file" {
     source      = "${path.root}/scripts/consul/install_consul.sh"
     destination = "/tmp/install_consul.sh"
+
+    connection {
+      type         = "ssh"
+      user         = "root"
+      host         = "${self.ipv4_address}"
+    }
   }
 
   provisioner "file" {
     source      = "${path.root}/scripts/nomad/install_nomad.sh"
     destination = "/tmp/install_nomad.sh"
+
+    connection {
+      type         = "ssh"
+      user         = "root"
+      host         = "${self.ipv4_address}"
+    }
   }
 
   provisioner "remote-exec" {
@@ -49,6 +61,12 @@ resource "digitalocean_droplet" "client1" {
       "chmod +x /tmp/install_consul.sh",
       # "/tmp/install_consul.sh client ${self.ipv4_address_private} ${var.consul_server_ip}",
     ]
+
+    connection {
+      type         = "ssh"
+      user         = "root"
+      host         = "${self.ipv4_address}"
+    }
   }
 
   provisioner "remote-exec" {
@@ -56,6 +74,12 @@ resource "digitalocean_droplet" "client1" {
       "chmod +x /tmp/install_nomad.sh",
       "/tmp/install_nomad.sh client",
     ]
+
+    connection {
+      type         = "ssh"
+      user         = "root"
+      host         = "${self.ipv4_address}"
+    }
   }
 
 }

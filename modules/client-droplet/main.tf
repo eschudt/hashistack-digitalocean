@@ -14,7 +14,7 @@ variable "consul_server_ip" {
 }
 
 # Create a new Web Droplet in the lon1 region
-resource "digitalocean_droplet" "server1" {
+resource "digitalocean_droplet" "client1" {
   count              = "${var.client_count}"
   name               = "client-${count.index + 1}"
   image              = "ubuntu-16-04-x64"
@@ -40,14 +40,14 @@ resource "digitalocean_droplet" "server1" {
   }
 
   provisioner "file" {
-    source      = "${path.root}/scripts/nomad/install_nomad.sh""
+    source      = "${path.root}/scripts/nomad/install_nomad.sh"
     destination = "/tmp/install_nomad.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/install_consul.sh",
-      "/tmp/install_consul.sh client ${self.ipv4_address_private} ${var.consul_server_ip}",
+      # "/tmp/install_consul.sh client ${self.ipv4_address_private} ${var.consul_server_ip}",
     ]
   }
 

@@ -10,7 +10,7 @@ variable "server_count" {
 }
 
 # Create a new Web Droplet in the lon1 region
-resource "digitalocean_droplet" "server1" {
+resource "digitalocean_droplet" "server" {
   count              = "${var.server_count}"
   name               = "server-${count.index + 1}"
   image              = "ubuntu-16-04-x64"
@@ -56,7 +56,7 @@ resource "digitalocean_droplet" "server1" {
   }
 
   provisioner "file" {
-    source      = "${path.root}/scripts/nomad/install_nomad.sh""
+    source      = "${path.root}/scripts/nomad/install_nomad.sh"
     destination = "/tmp/install_nomad.sh"
   }
 
@@ -77,6 +77,10 @@ resource "digitalocean_droplet" "server1" {
 
 }
 
+#output "consul_server_ip" {
+ # value = "${self.ipv4_address_private}"
+#}
+
 output "consul_server_ip" {
-  value = "${self.ipv4_address_private}"
+  value = "${digitalocean_droplet.server.0.ipv4_address_private}"
 }

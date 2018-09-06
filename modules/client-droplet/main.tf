@@ -13,6 +13,11 @@ variable "consul_server_ip" {
   description = "The ip address of a consul server"
 }
 
+#null resource to ensure dependency of server module
+resource "null_resource" "dependency_manager" {
+  count = "${var.consul_server_ip}"
+}
+
 # Create a new Web Droplet in the lon1 region
 resource "digitalocean_droplet" "client" {
   count              = "${var.client_count}"
@@ -23,7 +28,7 @@ resource "digitalocean_droplet" "client" {
   private_networking = true
   ssh_keys = ["${var.ssh_fingerprint}"]
 
-  depends_on = ["digitalocean_droplet.server"]
+  depends_on = ["null_resource.dependency_manager"]
 
   connection {
     type         = "ssh"

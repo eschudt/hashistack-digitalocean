@@ -21,6 +21,11 @@ server {
     bootstrap_expect = 1
 }
 
+# Enable a client on the same node
+client {
+  enabled = true
+}
+
 consul {
   address             = "127.0.0.1:8500"
   server_service_name = "nomad"

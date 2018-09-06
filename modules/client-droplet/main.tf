@@ -23,6 +23,8 @@ resource "digitalocean_droplet" "client" {
   private_networking = true
   ssh_keys = ["${var.ssh_fingerprint}"]
 
+  depends_on = ["digitalocean_droplet.server"]
+
   connection {
     type         = "ssh"
     user         = "root"

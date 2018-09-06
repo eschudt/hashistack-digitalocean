@@ -15,7 +15,9 @@ variable "consul_server_ip" {
 
 #null resource to ensure dependency of server module
 resource "null_resource" "dependency_manager" {
-  count = "${var.consul_server_ip}"
+  triggers {
+    dependency_id = "${var.consul_server_ip}"
+  }
 }
 
 # Create a new Web Droplet in the lon1 region

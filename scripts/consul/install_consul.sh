@@ -8,11 +8,11 @@ cp consul /usr/bin/
 mkdir /etc/consul.d
 mkdir /tmp/consul
 if [ $1 == "server" ]; then
-	consul agent -server -bootstrap-expect=1 -data-dir=/tmp/consul -node=agent-one -bind=$2 -enable-script-checks=true -config-dir=/etc/consul.d &
+  consul agent -server -bootstrap-expect=1 -data-dir=/tmp/consul -node=agent-one -bind=$2 -enable-script-checks=true -config-dir=/etc/consul.d > consul-server.log 2>&1 &
 else
-  consul agent -data-dir=/tmp/consul -node=agent-two -bind=$2 -enable-script-checks=true -config-dir=/etc/consul.d &
+  consul agent -data-dir=/tmp/consul -node=agent-two -bind=$2 -enable-script-checks=true -config-dir=/etc/consul.d > consul-client.log 2>&1 &
   sleep 5
-	consul join $3
+  consul join $3
 fi
 echo "Installation of Consul complete\n"
 exit 0

@@ -23,7 +23,7 @@ resource "digitalocean_droplet" "server" {
     type         = "ssh"
     user         = "root"
     host         = "${self.ipv4_address}"
-    agent        = false
+    agent        = true
   }
 
   provisioner "file" {

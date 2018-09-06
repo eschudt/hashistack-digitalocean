@@ -27,7 +27,7 @@ resource "digitalocean_droplet" "client" {
     type         = "ssh"
     user         = "root"
     host         = "${self.ipv4_address}"
-    agent        = false
+    agent        = true
   }
 
   provisioner "file" {
@@ -48,7 +48,7 @@ resource "digitalocean_droplet" "client" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/install_consul.sh",
-      # "/tmp/install_consul.sh client ${self.ipv4_address_private} ${var.consul_server_ip}",
+      "/tmp/install_consul.sh client ${self.ipv4_address_private} ${var.consul_server_ip}",
     ]
   }
 

@@ -1,0 +1,10 @@
+[Unit]
+Description=Nomad client
+Wants=network-online.target
+After=network-online.target
+[Service]
+ExecStart= /bin/sh -c "/usr/bin/nomad agent -config /root/client.hcl"
+Restart=always
+RestartSec=10
+[Install]
+WantedBy=multi-user.target

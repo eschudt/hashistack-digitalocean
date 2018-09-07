@@ -1,0 +1,10 @@
+[Unit]
+Description=Consul client
+Wants=network-online.target
+After=network-online.target
+[Service]
+ExecStart= /bin/sh -c "consul agent -data-dir=/tmp/consul -node=agent-two -bind=$(/sbin/ifconfig eth1 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}') -enable-script-checks=true -config-dir=/etc/consul.d"
+Restart=always
+RestartSec=10
+[Install]
+WantedBy=multi-user.target

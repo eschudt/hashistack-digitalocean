@@ -40,8 +40,8 @@ resource "digitalocean_droplet" "client" {
   }
 
   provisioner "file" {
-    source      = "${path.root}/scripts/nomad/client/client2.hcl"
-    destination = "/root/client2.hcl"
+    source      = "${path.root}/scripts/nomad/client/client.hcl"
+    destination = "/root/client.hcl"
   }
 
   provisioner "file" {
@@ -52,6 +52,16 @@ resource "digitalocean_droplet" "client" {
   provisioner "file" {
     source      = "${path.root}/scripts/nomad/install_nomad.sh"
     destination = "/tmp/install_nomad.sh"
+  }
+
+  provisioner "file" {
+    source      = "${path.root}/scripts/nomad/nomad-client.service"
+    destination = "/etc/systemd/system/nomad-client.service"
+  }
+
+  provisioner "file" {
+    source      = "${path.root}/scripts/consul/consul-client.service"
+    destination = "/etc/systemd/system/consul-client.service"
   }
 
   provisioner "remote-exec" {

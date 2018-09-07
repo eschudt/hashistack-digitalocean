@@ -55,7 +55,7 @@ resource "digitalocean_droplet" "client" {
   }
 
   provisioner "file" {
-    source      = "${path.root}/scripts/nomad/nomad-client.service"
+    source      = "${path.root}/scripts/nomad/client/nomad-client.service"
     destination = "/etc/systemd/system/nomad-client.service"
   }
 

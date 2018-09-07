@@ -26,8 +26,11 @@ job "name-generator" {
         args = [
           "-bind", "${NOMAD_PORT_http}",
           "--dns", "169.254.1.1",
-          "-e", "CONSUL_HTTP_ADDR=http://169.254.1.1:8500",
         ]
+      }
+
+      env {
+        "CONSUL_HTTP_ADDR" = "http://169.254.1.1:8500"
       }
 
       service {

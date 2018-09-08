@@ -25,12 +25,11 @@ job "name-generator" {
         advertise_ipv6_address = false
         args = [
           "-bind", "${NOMAD_PORT_http}",
-          "--dns", "169.254.1.1",
         ]
       }
 
       env {
-        "CONSUL_HTTP_ADDR" = "http://169.254.1.1:8500"
+        "CONSUL_HTTP_ADDR" = "http://172.17.0.1:8500"
       }
 
       service {

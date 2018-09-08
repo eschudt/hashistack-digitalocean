@@ -2,30 +2,42 @@
 Terraform to setup a consul and nomad cluster by building the number of servers and clients specified.
 Uses digital ocean as a provider to create the droplets needed.
 
+It starts nomad and consul as a service and automatically connects all nodes in the cluster
+
 ## Environment variables
 * `do_token` - api token for digital ocean which can be found in your DigitalOcean Account under "API"
 * `ssh_fingerprint` - the ssh fingerprint to use to connect to your newly created droplets
 
 ## Modules
+### server-droplet
+* Create servers and sets up nomad and consul in server mode
+* `server_count` - number of server droplets to create
+
 ### client-droplet
-* Create clients and sets up nomand and consul in client mode (TODO instantiating in client mode)
+* Create clients and sets up nomad and consul in client mode
 * `client_count` - number of client droplets to create
 * `consul_server_ip` - a consul server ip
-
-### server-droplet
-* Create servers and sets up nomand and consul in server mode (TODO instantiating in server mode)
-* `server_count` - number of server droplets to create
 
 ## Scripts
 Scripts for installing required software in newly created droplets
 
 ### consul
-Downloads consul and copies the binary to the /user/bin directory
+`install_consul.sh client|server ${self.ipv4_address_private} ${var.consul_server_ip}`
+* Installs required software - unzip and docker
+* Sets up iptables to allow access to localhost from docker
+* Downloads consul and copies the binary to the /user/bin directory
+* Starts consul as a service in either server or client mode
+* If in client mode, it joins the client to the cluster
 
 ### nomad
-Downloads nomad and copies the binary to the /user/bin directory
+`install_nomad.sh client|server`
+* Downloads nomad and copies the binary to the /user/bin directory
+* Starts nomad as a service in either server or client mode
+
 
 ## How to run
-* terraform init
-* terraform plan
-* terraform apply
+* `eval `ssh-agent -s``
+* `ssh-add ~/.ssh/id_rsa` (add your private key to the ssh agent)
+* `terraform init`
+* `terraform plan`
+* `terraform apply`

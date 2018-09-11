@@ -79,7 +79,3 @@ resource "digitalocean_droplet" "client" {
   }
 
 }
-
-output "nomad_server_ip" {
-  value = "${var.consul_server_ip}"
-}

@@ -16,8 +16,3 @@ module "client-droplet" {
   client_count = "1"
   consul_server_ip = "${module.server-droplet.consul_server_ip}"
 }
-
-module "nomad-jobs" {
-  source = "./modules/nomad-jobs"
-  nomad_server_ip = "${module.client-droplet.nomad_server_ip}"
-}

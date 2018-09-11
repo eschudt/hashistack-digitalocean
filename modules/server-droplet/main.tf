@@ -85,6 +85,14 @@ resource "digitalocean_droplet" "server" {
       "/tmp/install_nomad.sh server",
     ]
   }
+
+  provisioner "local-exec" {
+    command = "echo ${digitalocean_droplet.server.0.ipv4_address_private} > /root/private_server.txt"
+  }
+
+  provisioner "local-exec" {
+    command = "echo ${digitalocean_droplet.server.0.ipv4_address} > /root/public_server.txt"
+  }
 }
 
 output "consul_server_ip" {

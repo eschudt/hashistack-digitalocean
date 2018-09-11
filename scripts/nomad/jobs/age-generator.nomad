@@ -21,12 +21,10 @@ job "age-generator" {
       driver = "docker"
 
       config {
-        image = "eschudt/age-generator:0.0.1"
+        image = "eschudt/age-generator:${version}"
         advertise_ipv6_address = false
         args = [
-          "-bind", "${NOMAD_PORT_http}",
-          "--dns", "169.254.1.1",
-          "-e", "CONSUL_HTTP_ADDR=http://169.254.1.1:8500",
+          "-bind", "${NOMAD_PORT_http}"
         ]
       }
 

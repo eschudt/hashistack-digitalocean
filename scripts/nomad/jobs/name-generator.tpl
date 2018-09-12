@@ -21,7 +21,7 @@ job "name-generator" {
       driver = "docker"
 
       config {
-        image = "eschudt/name-generator:0.0.1"
+        image = "eschudt/name-generator:${version}"
         advertise_ipv6_address = false
         args = [
           "-bind", "${NOMAD_PORT_http}",

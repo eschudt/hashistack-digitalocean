@@ -12,12 +12,17 @@ sysctl -w net.ipv4.conf.docker0.route_localnet=1
 iptables -t nat -I PREROUTING -i docker0 -d 172.17.0.1 -p tcp --dport 8500 -j DNAT --to 127.0.0.1:8500
 iptables -t filter -I INPUT -i docker0 -d 127.0.0.1 -p tcp --dport 8500 -j ACCEPT
 
-# Start install of consul and setup 
+# Start install of consul and setup
 wget https://releases.hashicorp.com/consul/1.2.1/consul_1.2.1_linux_amd64.zip
 unzip consul_1.2.1_linux_amd64.zip
 cp consul /usr/bin/
 mkdir /etc/consul.d
 mkdir /tmp/consul
+
+# Install of consul-template and setup
+wget https://releases.hashicorp.com/consul-template/0.19.5/consul-template_0.19.5_linux_amd64.zip
+unzip consul-template_0.19.5_linux_amd64.zip
+cp consul-template /usr/bin/
 
 # Start consul as a service
 if [ $1 == "server" ]; then

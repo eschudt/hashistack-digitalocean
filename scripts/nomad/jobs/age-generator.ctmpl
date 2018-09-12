@@ -1,4 +1,4 @@
-job "name-generator" {
+job "age-generator" {
 
   datacenters = ["dc1"]
 
@@ -16,33 +16,29 @@ job "name-generator" {
 
     count = 1
 
-    task "name-generator" {
+    task "age-generator" {
 
       driver = "docker"
 
       config {
-        image = "eschudt/name-generator:${version}"
+        image = "eschudt/age-generator:{{ key "age-generator-version" }}"
         advertise_ipv6_address = false
         args = [
-          "-bind", "${NOMAD_PORT_http}",
+          "-bind", "${NOMAD_PORT_http}"
         ]
-      }
-
-      env {
-        "CONSUL_HTTP_ADDR" = "http://172.17.0.1:8500"
       }
 
       service {
 
-        name = "name-generator"
+        name = "age-generator"
 
         port = "http"
 
-        tags = ["urlprefix-/names strip=/names"]
+        tags = ["urlprefix-/ages strip=/ages"]
 
         check {
           type     = "http"
-          name	   = "name-generator"
+          name	   = "age-generator"
           path     = "/"
           interval = "10s"
           timeout  = "2s"

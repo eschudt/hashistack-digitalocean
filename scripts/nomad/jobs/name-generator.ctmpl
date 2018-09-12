@@ -8,13 +8,13 @@ job "name-generator" {
 
     stagger      = "30s"
 
-    max_parallel = 1
+    max_parallel = 5
 
   }
 
   group "webs" {
 
-    count = 1
+    count = {{ key "name-generator-count" }}
 
     task "name-generator" {
 

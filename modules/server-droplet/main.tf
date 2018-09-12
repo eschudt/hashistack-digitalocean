@@ -71,6 +71,11 @@ resource "digitalocean_droplet" "server" {
     destination = "/etc/systemd/system/consul-server.service"
   }
 
+  provisioner "file" {
+    source      = "${path.root}/scripts/nomad/jobs/startJob.sh"
+    destination = "/root/startJob.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/install_consul.sh",

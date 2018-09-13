@@ -2,9 +2,9 @@
 
 echo "Installing Nomad on server\n"
 
-# Install nomad 
-wget https://releases.hashicorp.com/nomad/0.8.4/nomad_0.8.4_linux_amd64.zip
-unzip nomad_0.8.4_linux_amd64.zip
+# Install nomad
+wget https://releases.hashicorp.com/nomad/0.8.5/nomad_0.8.5_linux_amd64.zip
+unzip nomad_0.8.5_linux_amd64.zip
 cp nomad /usr/bin/
 
 # Start nomad as a service

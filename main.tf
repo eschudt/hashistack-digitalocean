@@ -16,3 +16,15 @@ module "client-droplet" {
   client_count = "1"
   consul_server_ip = "${module.server-droplet.consul_server_ip}"
 }
+
+module "load-balancer" {
+  source = "./modules/load-balancer"
+  server_ids = "${list("${module.server-droplet.server_id}", "${module.client-droplet.client_id}")}"
+}
+
+module "load-balancer" {
+  source = "./modules/firewall"
+  server_ids = "${list("${module.server-droplet.server_id}", "${module.client-droplet.client_id}")}"
+  load_balancer_ip = "${module.firewall.load_balancer_ip}"
+  bastion_ip = "${var.bastion_host_ip}"
+}

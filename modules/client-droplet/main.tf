@@ -24,7 +24,7 @@ resource "null_resource" "dependency_manager" {
 resource "digitalocean_droplet" "client" {
   count              = "${var.client_count}"
   name               = "client-${count.index + 1}"
-  image              = "ubuntu-16-04-x64"
+  image              = "ubuntu-18-04-x64"
   region             = "lon1"
   size               = "512mb"
   private_networking = true
@@ -78,4 +78,8 @@ resource "digitalocean_droplet" "client" {
     ]
   }
 
+}
+
+output "client_id" {
+  value = "${digitalocean_droplet.client.0.id}"
 }

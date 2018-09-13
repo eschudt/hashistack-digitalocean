@@ -13,7 +13,7 @@ variable "server_count" {
 resource "digitalocean_droplet" "server" {
   count              = "${var.server_count}"
   name               = "server-${count.index + 1}"
-  image              = "ubuntu-16-04-x64"
+  image              = "ubuntu-18-04-x64"
   region             = "lon1"
   size               = "512mb"
   private_networking = true
@@ -102,4 +102,8 @@ resource "digitalocean_droplet" "server" {
 
 output "consul_server_ip" {
   value = "${digitalocean_droplet.server.0.ipv4_address_private}"
+}
+
+output "server_id" {
+  value = "${digitalocean_droplet.server.0.id}"
 }

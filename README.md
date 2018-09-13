@@ -1,5 +1,6 @@
 # terra-nomad-consul
 Terraform to setup a consul and nomad cluster by building the number of servers and clients specified.
+It wraps them around a firewall that can only be accesses via a bastion host (ssh) and a load balancer (http)
 Uses digital ocean as a provider to create the droplets needed.
 
 It starts nomad and consul as a service and automatically connects all nodes in the cluster
@@ -7,6 +8,7 @@ It starts nomad and consul as a service and automatically connects all nodes in 
 ## Environment variables
 * `do_token` - api token for digital ocean which can be found in your DigitalOcean Account under "API"
 * `ssh_fingerprint` - the ssh fingerprint to use to connect to your newly created droplets
+* `bastion_host_ip` - the ip address of the bastion host server
 
 ## Modules
 ### server-droplet
@@ -17,6 +19,16 @@ It starts nomad and consul as a service and automatically connects all nodes in 
 * Create clients and sets up nomad and consul in client mode
 * `client_count` - number of client droplets to create
 * `consul_server_ip` - a consul server ip
+
+### load-balancer
+* Create a public load balancer to connect to all servers
+* `server_ids` - ids of all servers (droplets)
+
+### firewall
+* Create a firewall around the server and client droplets
+* `server_ids` - ids of all servers (droplets)
+* `load_balancer_ip` - the ip address of the load balancer
+* `bastion_ip` - the ip address of the bastion host
 
 ## Scripts
 Scripts for installing required software in newly created droplets
@@ -36,8 +48,8 @@ Scripts for installing required software in newly created droplets
 
 
 ## How to run
-* `eval `ssh-agent -s``
-* `ssh-add ~/.ssh/id_rsa` (add your private key to the ssh agent)
+* ```eval `ssh-agent -s```
+* `ssh-add ~/.ssh/id_rsa` (add your private key to the ssh agent which corresponds to the ssh_fingerprint)
 * `terraform init`
 * `terraform plan`
 * `terraform apply`

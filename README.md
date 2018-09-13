@@ -48,7 +48,7 @@ Scripts for installing required software in newly created droplets
 
 
 ## How to run
-* ``eval `ssh-agent -s```
+* ``eval `ssh-agent -s` ``
 * `ssh-add ~/.ssh/id_rsa` (add your private key to the ssh agent which corresponds to the ssh_fingerprint)
 * `terraform init`
 * `terraform plan`

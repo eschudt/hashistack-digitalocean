@@ -78,6 +78,7 @@ resource "digitalocean_droplet" "server" {
 
   provisioner "remote-exec" {
     inline = [
+      "chmod +x /root/startJob.sh",
       "chmod +x /tmp/install_consul.sh",
       "/tmp/install_consul.sh server ${self.ipv4_address_private}",
     ]

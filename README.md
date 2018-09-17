@@ -8,7 +8,7 @@ It starts nomad and consul as a service and automatically connects all nodes in 
 ## Environment variables
 * `do_token` - api token for digital ocean which can be found in your DigitalOcean Account under "API"
 * `ssh_fingerprint` - the ssh fingerprint to use to connect to your newly created droplets
-* `bastion_host_ip` - the ip address of the bastion host server
+* `bastion_host_id` - the droplet id of the bastion host server
 
 ## Modules
 ### server-droplet
@@ -27,8 +27,8 @@ It starts nomad and consul as a service and automatically connects all nodes in 
 ### firewall
 * Create a firewall around the server and client droplets
 * `server_ids` - ids of all servers (droplets)
-* `load_balancer_ip` - the ip address of the load balancer
-* `bastion_ip` - the ip address of the bastion host
+* `load_balancer_id` - the id of the digital ocean load balancer
+* `bastion_id` - the droplet id of the bastion host
 
 ## Scripts
 Scripts for installing required software in newly created droplets

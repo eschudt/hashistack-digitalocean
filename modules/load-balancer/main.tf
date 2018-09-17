@@ -26,6 +26,6 @@ resource "digitalocean_loadbalancer" "public" {
   droplet_ids = ["${var.server_ids}"]
 }
 
-output "load_balancer_ip" {
-  value = "${digitalocean_loadbalancer.public.ip}"
+output "load_balancer_id" {
+  value = "${digitalocean_loadbalancer.public.id}"
 }

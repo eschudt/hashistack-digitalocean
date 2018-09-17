@@ -6,7 +6,7 @@ variable "server_ids" {
   description = "list of servers"
 }
 
-variable "load_balancer_ip" {
+variable "load_balancer_id" {
   description = "IP Address of load balancer"
 }
 
@@ -23,17 +23,22 @@ resource "digitalocean_firewall" "web" {
     {
       protocol           = "tcp"
       port_range         = "22"
-      source_addresses   = ["${var.bastion_ip}/0"]
+      source_droplet_ids = ["${var.bastion_id}"]
     },
     {
       protocol           = "tcp"
-      port_range         = "80"
-      source_addresses   = ["${var.load_balancer_ip}/0"]
+      port_range         = "9999"
+      source_load_balancer_uids = ["${var.load_balancer_id}"]
     },
     {
       protocol           = "tcp"
-      port_range         = "443"
-      source_addresses   = ["${var.load_balancer_ip}/0"]
+      port_range         = "all"
+      source_droplet_ids = ["${var.server_ids}"]
+    },
+    {
+      protocol           = "udp"
+      port_range         = "all"
+      source_droplet_ids = ["${var.server_ids}"]
     },
   ]
 

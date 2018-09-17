@@ -110,7 +110,7 @@ resource "digitalocean_droplet" "server" {
     inline = [
       "chmod +x /tmp/install_vault.sh",
       "sed -i 's/server_ip/${self.ipv4_address_private}/g' /root/vault-config.hcl",
-      "/tmp/install_vault server",
+      "/tmp/install_vault.sh server",
       ]
     }
 

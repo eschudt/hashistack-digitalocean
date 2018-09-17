@@ -23,7 +23,7 @@ resource "digitalocean_loadbalancer" "public" {
     protocol = "tcp"
   }
 
-  droplet_ids = "${var.server_ids}"
+  droplet_ids = ["${var.server_ids}"]
 }
 
 output "load_balancer_ip" {

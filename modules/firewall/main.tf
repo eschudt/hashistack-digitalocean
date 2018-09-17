@@ -17,7 +17,7 @@ variable "bastion_ip" {
 resource "digitalocean_firewall" "web" {
   name = "firewall-1"
 
-  droplet_ids = "${var.server_ids}"
+  droplet_ids = ["${var.server_ids}"]
 
   inbound_rule = [
     {

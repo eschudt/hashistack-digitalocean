@@ -22,9 +22,9 @@ module "load-balancer" {
   server_ids = "${list("${module.server-droplet.server_id}", "${module.client-droplet.client_id}")}"
 }
 
-module "load-balancer" {
+module "firewall" {
   source = "./modules/firewall"
   server_ids = "${list("${module.server-droplet.server_id}", "${module.client-droplet.client_id}")}"
-  load_balancer_ip = "${module.firewall.load_balancer_ip}"
+  load_balancer_ip = "${module.load-balancer.load_balancer_ip}"
   bastion_ip = "${var.bastion_host_ip}"
 }

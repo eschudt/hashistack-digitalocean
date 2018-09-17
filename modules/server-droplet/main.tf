@@ -82,6 +82,11 @@ resource "digitalocean_droplet" "server" {
 
   # Vault files
   provisioner "file" {
+    source      = "${path.root}/scripts/vault/vault-config.hcl"
+    destination = "/root/vault-config.hcl"
+  }
+
+  provisioner "file" {
     source      = "${path.root}/scripts/vault/vault-server.service"
     destination = "/etc/systemd/system/vault-server.service"
   }

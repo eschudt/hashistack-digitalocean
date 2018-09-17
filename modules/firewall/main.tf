@@ -24,6 +24,7 @@ resource "digitalocean_firewall" "web" {
       protocol           = "tcp"
       port_range         = "22"
       source_droplet_ids = ["${var.bastion_id}"]
+      source_load_balancer_uids = ["${var.load_balancer_id}"]
     },
     {
       protocol           = "tcp"

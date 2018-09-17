@@ -46,6 +46,13 @@ Scripts for installing required software in newly created droplets
 * Downloads nomad and copies the binary to the /user/bin directory
 * Starts nomad as a service in either server or client mode
 
+### vault
+`install_vault.sh server`
+* Downloads vault and copies the binary to the /user/bin directory
+* Starts vault as a service in server mode
+* Initializes Vault
+* Unseals vaults to make it ready for use
+* Exports the vault token for nomad to use
 
 ## How to run
 * ``eval `ssh-agent -s` ``

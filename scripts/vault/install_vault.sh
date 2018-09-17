@@ -11,6 +11,8 @@ cp vault /usr/bin/
 if [ $1 == "server" ]; then
 	systemctl enable vault-server.service
 	systemctl start vault-server.service
+
+	# TODO init vautl, unseal vault and export root token
 fi
 echo "Installation of Vault complete\n"
 exit 0

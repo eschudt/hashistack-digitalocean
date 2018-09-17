@@ -24,3 +24,8 @@ consul {
   server_auto_join    = true
   client_auto_join    = true
 }
+
+vault {
+  enabled = true
+  address = "http://server_ip:8200"
+}

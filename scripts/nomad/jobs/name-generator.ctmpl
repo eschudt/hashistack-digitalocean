@@ -29,7 +29,8 @@ job "name-generator" {
       }
 
       env {
-        "CONSUL_HTTP_ADDR" = "http://172.17.0.1:8500"
+        "CONSUL_HTTP_ADDR" = "http://172.17.0.1:8500",
+        "API_KEY" = "{{with secret "secret/my_api_key"}}{{.Data.my_api_key}}{{end}}"
       }
 
       service {

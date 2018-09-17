@@ -1,0 +1,10 @@
+[Unit]
+Description=Vault server
+Wants=network-online.target
+After=network-online.target
+[Service]
+ExecStart= /bin/sh -c "/usr/bin/vault server -config=/root/vault-config.hcl"
+Restart=always
+RestartSec=10
+[Install]
+WantedBy=multi-user.target

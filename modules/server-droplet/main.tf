@@ -37,18 +37,18 @@ resource "digitalocean_droplet" "server" {
   }
 
   provisioner "file" {
-    source      = "${path.root}/scripts/nomad/jobs/fabio.tpl"
-    destination = "/root/fabio.tpl"
+    source      = "${path.root}/scripts/nomad/jobs/fabio.ctmpl"
+    destination = "/root/fabio.ctmpl"
   }
 
   provisioner "file" {
-    source      = "${path.root}/scripts/nomad/jobs/age-generator.tpl"
-    destination = "/root/age-generator.tpl"
+    source      = "${path.root}/scripts/nomad/jobs/age-generator.ctmpl"
+    destination = "/root/age-generator.ctmpl"
   }
 
   provisioner "file" {
-    source      = "${path.root}/scripts/nomad/jobs/name-generator.tpl"
-    destination = "/root/name-generator.tpl"
+    source      = "${path.root}/scripts/nomad/jobs/name-generator.ctmpl"
+    destination = "/root/name-generator.ctmpl"
   }
 
   provisioner "file" {

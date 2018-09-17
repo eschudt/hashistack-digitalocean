@@ -8,7 +8,7 @@ serviceCount=$3
 # Ubuntu 16 use the command below
 #nomadIp=`/sbin/ifconfig eth1 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
 # Ubuntu 18 use the command below
-nomadIp=`/sbin/ifconfig eth1 | grep 'inet ' | sed 's/\s\s*/ /g' | cut -d" " -f3 | awk '{ print $1}'`
+nomadIp=`/sbin/ifconfig eth1 | grep 'inet ' | sed 's/\s\s*/ /g' | cut -d' ' -f3 | awk '{ print $1}'`
 
 export NOMAD_ADDR="http://${nomadIp}:4646"
 

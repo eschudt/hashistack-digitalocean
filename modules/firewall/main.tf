@@ -10,8 +10,8 @@ variable "load_balancer_id" {
   description = "IP Address of load balancer"
 }
 
-variable "bastion_ip" {
-  description = "IP Address of bastion host"
+variable "bastion_id" {
+  description = "Droplet id of bastion host"
 }
 
 resource "digitalocean_firewall" "web" {

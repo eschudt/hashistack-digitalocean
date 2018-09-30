@@ -19,12 +19,12 @@ module "client-droplet" {
 
 module "load-balancer" {
   source = "./modules/load-balancer"
-  server_ids = "${list("${module.server-droplet.server_id}", "${module.client-droplet.client_id}")}"
+  all_server_ids = "${list("${module.server-droplet.server_ids}", "${module.client-droplet.client_ids}")}"
 }
 
 module "firewall" {
   source = "./modules/firewall"
-  server_ids = "${list("${module.server-droplet.server_id}", "${module.client-droplet.client_id}")}"
+  all_server_ids = "${list("${module.server-droplet.server_ids}", "${module.client-droplet.client_ids}")}"
   load_balancer_id = "${module.load-balancer.load_balancer_id}"
   bastion_id = "${var.bastion_host_id}"
 }

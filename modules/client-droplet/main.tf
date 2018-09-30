@@ -39,14 +39,23 @@ resource "digitalocean_droplet" "client" {
     agent        = true
   }
 
-  provisioner "file" {
-    source      = "${path.root}/scripts/nomad/client/client.hcl"
-    destination = "/root/client.hcl"
-  }
-
+  # Copy files to remote server
+  # Consul files
   provisioner "file" {
     source      = "${path.root}/scripts/consul/install_consul.sh"
     destination = "/tmp/install_consul.sh"
+  }
+
+  provisioner "file" {
+    source      = "${path.root}/scripts/consul/consul-client.service"
+    destination = "/etc/systemd/system/consul-client.service"
+  }
+
+
+  # Nomad files
+  provisioner "file" {
+    source      = "${path.root}/scripts/nomad/client/client.hcl"
+    destination = "/root/client.hcl"
   }
 
   provisioner "file" {
@@ -59,11 +68,8 @@ resource "digitalocean_droplet" "client" {
     destination = "/etc/systemd/system/nomad-client.service"
   }
 
-  provisioner "file" {
-    source      = "${path.root}/scripts/consul/consul-client.service"
-    destination = "/etc/systemd/system/consul-client.service"
-  }
-
+  # Run commands
+  # Install Consul
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/install_consul.sh",
@@ -71,6 +77,7 @@ resource "digitalocean_droplet" "client" {
     ]
   }
 
+  # Install Nomad
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/install_nomad.sh",
@@ -80,6 +87,6 @@ resource "digitalocean_droplet" "client" {
 
 }
 
-output "client_id" {
-  value = "${digitalocean_droplet.client.0.id}"
+output "client_ids" {
+  value = "${digitalocean_droplet.client.*.id}"
 }

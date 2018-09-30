@@ -22,11 +22,11 @@ It starts nomad and consul as a service and automatically connects all nodes in 
 
 ### load-balancer
 * Create a public load balancer to connect to all servers
-* `server_ids` - ids of all servers (droplets)
+* `all_server_ids` - ids of all servers (droplets)
 
 ### firewall
 * Create a firewall around the server and client droplets
-* `server_ids` - ids of all servers (droplets)
+* `all_server_ids` - ids of all servers (droplets)
 * `load_balancer_id` - the id of the digital ocean load balancer
 * `bastion_id` - the droplet id of the bastion host
 

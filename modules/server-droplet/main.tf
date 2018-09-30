@@ -96,12 +96,19 @@ resource "digitalocean_droplet" "server" {
     destination = "/tmp/install_vault.sh"
   }
 
+  provisioner "file" {
+    source      = "${path.root}/scripts/vault/setup_vault.sh"
+    destination = "/tmp/setup_vault.sh"
+  }
+
   # Run commands
   # Install Consul
   provisioner "remote-exec" {
     inline = [
+      "sed -i 's/server_count/${var.server_count}/g' /etc/systemd/system/consul-server.service",
       "chmod +x /tmp/install_consul.sh",
       "/tmp/install_consul.sh server ${self.ipv4_address_private}",
+      "consul join ${element(digitalocean_droplet.server.*.ipv4_address_private, count.index-1)}",
     ]
   }
 
@@ -111,8 +118,19 @@ resource "digitalocean_droplet" "server" {
       "chmod +x /tmp/install_vault.sh",
       "sed -i 's/server_ip/${self.ipv4_address_private}/g' /root/vault-config.hcl",
       "/tmp/install_vault.sh server",
-      ]
-    }
+      "chmod +x /tmp/setup_vault.sh",
+      "/tmp/setup_vault.sh ${count.index}",
+    ]
+  }
+
+  provisioner "local-exec" {
+    inline = [
+      "chmod +x /tmp/install_vault.sh",
+      "sed -i 's/server_ip/${self.ipv4_address_private}/g' /root/vault-config.hcl",
+      "/tmp/install_vault.sh server",
+      "scp -o StrictHostKeyChecking=no root@${digitalocean_droplet.server.0.ipv4_address}:/tmp/startupOutput.txt /root/vaultDetails.txt",
+    ]
+  }
 
   # Install Nomad
   provisioner "remote-exec" {
@@ -120,6 +138,7 @@ resource "digitalocean_droplet" "server" {
       "chmod +x /root/startJob.sh",
       "chmod +x /tmp/install_nomad.sh",
       "sed -i 's/server_ip/${self.ipv4_address_private}/g' /root/server.hcl",
+      "sed -i 's/server_count/${var.server_count}/g' /root/server.hcl",
       "/tmp/install_nomad.sh server",
     ]
   }
@@ -137,6 +156,6 @@ output "consul_server_ip" {
   value = "${digitalocean_droplet.server.0.ipv4_address_private}"
 }
 
-output "server_id" {
-  value = "${digitalocean_droplet.server.0.id}"
+output "server_ids" {
+  value = ["${digitalocean_droplet.server.*.id}"]
 }

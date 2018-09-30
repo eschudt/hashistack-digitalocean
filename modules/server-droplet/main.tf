@@ -135,7 +135,7 @@ resource "digitalocean_droplet" "server" {
   }
 
   provisioner "local-exec" {
-    command = "scp -o StrictHostKeyChecking=no root@${digitalocean_droplet.server.0.ipv4_address}:/tmp/startupOutput.txt /root/vaultDetails.txt"
+    command = "scp -o StrictHostKeyChecking=no root@${digitalocean_droplet.server.0.ipv4_address}:/root/startupOutput.txt /root/vaultDetails.txt"
   }
 
   # Install Nomad

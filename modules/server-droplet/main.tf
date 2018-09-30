@@ -122,8 +122,13 @@ resource "digitalocean_droplet" "server" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/install_vault.sh",
-      "sed -i 's/server_ip/${self.ipv4_address_private}/g' /root/vault-config.hcl",
       "/tmp/install_vault.sh server",
+    ]
+  }
+
+  # Setup Vault
+  provisioner "remote-exec" {
+    inline = [
       "chmod +x /tmp/setup_vault.sh",
       "/tmp/setup_vault.sh ${count.index}",
     ]

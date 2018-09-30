@@ -5,7 +5,7 @@ log_level = "DEBUG"
 data_dir = "/tmp/client"
 
 # Give the agent a unique name. Defaults to hostname
-name = "client"
+# name = "client"
 
 # Enable the client
 client {
@@ -18,14 +18,12 @@ ports {
 
 consul {
   address             = "127.0.0.1:8500"
-  server_service_name = "nomad"
-  client_service_name = "nomad-client"
+  client_service_name = "nomad-client-countIndex"
   auto_advertise      = true
-  server_auto_join    = true
   client_auto_join    = true
 }
 
 vault {
   enabled = true
-  address = "http://server_ip:8200"
+  address = "http://127.0.0.1:8200"
 }

@@ -28,8 +28,8 @@ client {
 
 consul {
   address             = "127.0.0.1:8500"
-  server_service_name = "nomad"
-  client_service_name = "nomad-client"
+  server_service_name = "nomad-countIndex"
+  client_service_name = "nomad-client-s-countIndex"
   auto_advertise      = true
   server_auto_join    = true
   client_auto_join    = true
@@ -37,5 +37,5 @@ consul {
 
 vault {
   enabled = true
-  address = "http://server_ip:8200"
+  address = "http://127.0.0.1:8200"
 }

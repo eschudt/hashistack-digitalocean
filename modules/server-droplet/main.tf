@@ -105,7 +105,7 @@ resource "digitalocean_droplet" "server" {
   # Install Consul
   provisioner "remote-exec" {
     inline = [
-      "sed -i 's/server_count/${var.server_count}/g' /etc/systemd/system/consul-server.service",
+      "sed -i 's/count/${count.index + 1}/g' /etc/systemd/system/consul-server.service",
       "chmod +x /tmp/install_consul.sh",
       "/tmp/install_consul.sh server ${self.ipv4_address_private}",
     ]
@@ -114,7 +114,7 @@ resource "digitalocean_droplet" "server" {
   # Join Consul Servers
   provisioner "remote-exec" {
     inline = [
-      "consul join ${digitalocean_droplet.server.*.ipv4_address_private}",
+      "consul join ${digitalocean_droplet.server.0.ipv4_address_private}",
     ]
   }
 
@@ -145,6 +145,7 @@ resource "digitalocean_droplet" "server" {
       "chmod +x /tmp/install_nomad.sh",
       "sed -i 's/server_ip/${self.ipv4_address_private}/g' /root/server.hcl",
       "sed -i 's/server_count/${var.server_count}/g' /root/server.hcl",
+      "sed -i 's/countIndex/${count.index + 1}/g' /etc/systemd/system/nomad-server.service",
       "/tmp/install_nomad.sh server",
     ]
   }

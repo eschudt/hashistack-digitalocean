@@ -13,10 +13,15 @@ variable "consul_server_ip" {
   description = "The ip address of a consul server"
 }
 
+variable "server_ids" {
+  type = "list"
+  description = "list of servers"
+}
+
 #null resource to ensure dependency of server module
 resource "null_resource" "dependency_manager" {
   triggers {
-    dependency_id = "${var.consul_server_ip}"
+    dependency_id = ["${var.server_ids}"]
   }
 }
 
@@ -72,6 +77,7 @@ resource "digitalocean_droplet" "client" {
   # Install Consul
   provisioner "remote-exec" {
     inline = [
+      "sed -i 's/count/${count.index + 1}/g' /etc/systemd/system/consul-client.service",
       "chmod +x /tmp/install_consul.sh",
       "/tmp/install_consul.sh client ${self.ipv4_address_private} ${var.consul_server_ip}",
     ]
@@ -80,6 +86,7 @@ resource "digitalocean_droplet" "client" {
   # Install Nomad
   provisioner "remote-exec" {
     inline = [
+      "sed -i 's/countIndex/${count.index + 1}/g' /etc/systemd/system/nomad-client.service",
       "chmod +x /tmp/install_nomad.sh",
       "/tmp/install_nomad.sh client",
     ]

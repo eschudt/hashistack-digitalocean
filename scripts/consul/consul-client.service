@@ -3,7 +3,7 @@ Description=Consul client
 Wants=network-online.target
 After=network-online.target
 [Service]
-ExecStart= /bin/sh -c "consul agent -data-dir=/tmp/consul -node=agent-count -bind=$(/sbin/ifconfig eth1 | grep 'inet ' | sed 's/\s\s*/ /g' | cut -d' ' -f3 | awk '{ print $1}') -enable-script-checks=true -config-dir=/etc/consul.d"
+ExecStart= /bin/sh -c "consul agent -data-dir=/tmp/consul -node=agent-c-count -bind=$(/sbin/ifconfig eth1 | grep 'inet ' | sed 's/\s\s*/ /g' | cut -d' ' -f3 | awk '{ print $1}') -enable-script-checks=true -config-dir=/etc/consul.d"
 Restart=always
 RestartSec=10
 [Install]

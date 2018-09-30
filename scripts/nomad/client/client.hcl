@@ -5,7 +5,7 @@ log_level = "DEBUG"
 data_dir = "/tmp/client"
 
 # Give the agent a unique name. Defaults to hostname
-# name = "client"
+name = "nomad-client-countIndex"
 
 # Enable the client
 client {

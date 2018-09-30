@@ -108,7 +108,7 @@ resource "digitalocean_droplet" "server" {
       "sed -i 's/server_count/${var.server_count}/g' /etc/systemd/system/consul-server.service",
       "chmod +x /tmp/install_consul.sh",
       "/tmp/install_consul.sh server ${self.ipv4_address_private}",
-      "consul join ${element(digitalocean_droplet.server.*.ipv4_address_private, count.index-1)}",
+      "consul join ${digitalocean_droplet.server.0.ipv4_address_private}",
     ]
   }
 
@@ -124,12 +124,7 @@ resource "digitalocean_droplet" "server" {
   }
 
   provisioner "local-exec" {
-    inline = [
-      "chmod +x /tmp/install_vault.sh",
-      "sed -i 's/server_ip/${self.ipv4_address_private}/g' /root/vault-config.hcl",
-      "/tmp/install_vault.sh server",
-      "scp -o StrictHostKeyChecking=no root@${digitalocean_droplet.server.0.ipv4_address}:/tmp/startupOutput.txt /root/vaultDetails.txt",
-    ]
+    command = "scp -o StrictHostKeyChecking=no root@${digitalocean_droplet.server.0.ipv4_address}:/tmp/startupOutput.txt /root/vaultDetails.txt"
   }
 
   # Install Nomad

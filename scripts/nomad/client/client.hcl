@@ -5,7 +5,7 @@ log_level = "DEBUG"
 data_dir = "/tmp/client"
 
 # Give the agent a unique name. Defaults to hostname
-name = "nomad-client-countIndex"
+#name = "nomad-client-countIndex"
 
 # Enable the client
 client {
@@ -18,8 +18,10 @@ ports {
 
 consul {
   address             = "127.0.0.1:8500"
-  client_service_name = "nomad-client-countIndex"
+  server_service_name = "nomad"
+  client_service_name = "nomad-client"
   auto_advertise      = true
+  server_auto_join    = true
   client_auto_join    = true
 }
 

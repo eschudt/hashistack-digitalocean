@@ -9,6 +9,8 @@ It starts nomad and consul as a service and automatically connects all nodes in 
 * `do_token` - api token for digital ocean which can be found in your DigitalOcean Account under "API"
 * `ssh_fingerprint` - the ssh fingerprint to use to connect to your newly created droplets
 * `bastion_host_id` - the droplet id of the bastion host server
+* `server_count` - number of server droplets to create
+* `client_count` - number of client droplets to create
 
 ## Modules
 ### server-droplet

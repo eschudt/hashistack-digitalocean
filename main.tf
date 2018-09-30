@@ -7,13 +7,13 @@ provider "digitalocean" {
 module "server-droplet" {
   source = "./modules/server-droplet"
   ssh_fingerprint = "${var.ssh_fingerprint}"
-  server_count = "1"
+  server_count = "${var.server_count}"
 }
 
 module "client-droplet" {
   source = "./modules/client-droplet"
   ssh_fingerprint = "${var.ssh_fingerprint}"
-  client_count = "1"
+  client_count = "${var.client_count}"
   consul_server_ip = "${module.server-droplet.consul_server_ip}"
 }
 

@@ -108,6 +108,12 @@ resource "digitalocean_droplet" "server" {
       "sed -i 's/server_count/${var.server_count}/g' /etc/systemd/system/consul-server.service",
       "chmod +x /tmp/install_consul.sh",
       "/tmp/install_consul.sh server ${self.ipv4_address_private}",
+    ]
+  }
+
+  # Join Consul Servers
+  provisioner "remote-exec" {
+    inline = [
       "consul join ${digitalocean_droplet.server.0.ipv4_address_private}",
     ]
   }

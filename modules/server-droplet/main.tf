@@ -114,7 +114,7 @@ resource "digitalocean_droplet" "server" {
   # Join Consul Servers
   provisioner "remote-exec" {
     inline = [
-      "consul join ${digitalocean_droplet.server.0.ipv4_address_private}",
+      "consul join ${digitalocean_droplet.server.*.ipv4_address_private}",
     ]
   }
 

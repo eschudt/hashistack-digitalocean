@@ -145,18 +145,17 @@ resource "digitalocean_droplet" "server" {
       "chmod +x /tmp/install_nomad.sh",
       "sed -i 's/server_ip/${self.ipv4_address_private}/g' /root/server.hcl",
       "sed -i 's/server_count/${var.server_count}/g' /root/server.hcl",
-      "sed -i 's/countIndex/${count.index + 1}/g' /etc/systemd/system/nomad-server.service",
       "/tmp/install_nomad.sh server",
     ]
   }
 
   # Join Nomad servers (Fix for nomad not auto starting #1945)
-  provisioner "remote-exec" {
-    inline = [
-      "export NOMAD_ADDR=http://${digitalocean_droplet.server.0.ipv4_address_private}:4646",
-      "nomad server join ${digitalocean_droplet.server.0.ipv4_address_private}",
-    ]
-  }
+  #provisioner "remote-exec" {
+  #  inline = [
+  #    "export NOMAD_ADDR=http://${digitalocean_droplet.server.0.ipv4_address_private}:4646",
+  #    "nomad server join ${digitalocean_droplet.server.0.ipv4_address_private}",
+  #  ]
+  #}
 
   provisioner "local-exec" {
     command = "echo ${digitalocean_droplet.server.0.ipv4_address_private} > /root/private_server.txt"

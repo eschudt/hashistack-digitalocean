@@ -5,6 +5,6 @@ After=network-online.target
 [Service]
 ExecStart= /bin/sh -c "/usr/bin/nomad agent -config /root/server.hcl"
 Restart=always
-RestartSec=10
+RestartSec=10000
 [Install]
 WantedBy=multi-user.target

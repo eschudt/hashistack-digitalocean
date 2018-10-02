@@ -8,9 +8,9 @@ bind_addr = "server_ip" # edit to private network
 
 advertise {
   # Edit to the private IP address.
-  http = "server_ip"
-  rpc  = "server_ip"
-  serf = "server_ip:5648" # non-default ports may be specified
+  http = "server_ip:4646"
+  rpc  = "server_ip:4647"
+  serf = "server_ip:4648" # non-default ports may be specified
 }
 
 # Enable the server
@@ -18,12 +18,15 @@ server {
     enabled = true
 
     # Self-elect, should be 3 or 5 for production
-    bootstrap_expect = 3
+    bootstrap_expect = server_count
 }
 
 # Enable a client on the same node
 client {
   enabled = true
+  options = {
+    "driver.raw_exec.enable" = "1"
+  }
 }
 
 consul {

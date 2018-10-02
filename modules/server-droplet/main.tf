@@ -150,12 +150,12 @@ resource "digitalocean_droplet" "server" {
   }
 
   # Join Nomad servers (Fix for nomad not auto starting #1945)
-  #provisioner "remote-exec" {
-  #  inline = [
-  #    "export NOMAD_ADDR=http://${digitalocean_droplet.server.0.ipv4_address_private}:4646",
-  #    "nomad server join ${digitalocean_droplet.server.0.ipv4_address_private}",
-  #  ]
-  #}
+  provisioner "remote-exec" {
+    inline = [
+      "export NOMAD_ADDR=http://${self.ipv4_address_private}:4646",
+      "nomad server join ${digitalocean_droplet.server.0.ipv4_address_private}",
+    ]
+  }
 
   provisioner "local-exec" {
     command = "echo ${digitalocean_droplet.server.0.ipv4_address_private} > /root/private_server.txt"

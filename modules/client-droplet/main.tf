@@ -13,15 +13,10 @@ variable "consul_server_ip" {
   description = "The ip address of a consul server"
 }
 
-variable "server_ids" {
-  type = "list"
-  description = "list of servers"
-}
-
 #null resource to ensure dependency of server module
 resource "null_resource" "dependency_manager" {
   triggers {
-    dependency_id = ["${var.server_ids}"]
+    dependency_id = "${var.consul_server_ip}"
   }
 }
 

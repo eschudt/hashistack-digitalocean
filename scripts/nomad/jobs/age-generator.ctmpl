@@ -8,7 +8,7 @@ job "age-generator" {
 
     stagger      = "30s"
 
-    max_parallel = 5
+    max_parallel = 1
 
   }
 

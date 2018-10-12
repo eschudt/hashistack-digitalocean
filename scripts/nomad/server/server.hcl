@@ -38,7 +38,7 @@ consul {
   client_auto_join    = true
 }
 
-#vault {
-#  enabled = true
-#  address = "http://127.0.0.1:8200"
-#}
+vault {
+  enabled = true
+  address = "http://127.0.0.1:8200"
+}

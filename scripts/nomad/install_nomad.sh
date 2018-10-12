@@ -7,6 +7,10 @@ wget https://releases.hashicorp.com/nomad/0.8.6/nomad_0.8.6_linux_amd64.zip
 unzip nomad_0.8.6_linux_amd64.zip
 cp nomad /usr/bin/
 
+# Setup Vault Token
+vaultToken=`grep "Initial Root Token" /root/startupOutput.txt | cut -d' ' -f4`
+export VAULT_TOKEN=vaultToken
+
 # Start nomad as a service
 if [ $1 == "server" ]; then
 	systemctl enable nomad-server.service

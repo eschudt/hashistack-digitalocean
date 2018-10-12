@@ -3,6 +3,7 @@ Description=Nomad server
 Wants=network-online.target
 After=network-online.target
 [Service]
+Environment="VAULT_TOKEN=replace_vault_token"
 ExecStart= /bin/sh -c "/usr/bin/nomad agent -config /root/server.hcl"
 Restart=always
 RestartSec=10000

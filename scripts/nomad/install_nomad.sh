@@ -9,7 +9,7 @@ cp nomad /usr/bin/
 
 # Setup Vault Token
 vaultToken=`grep "Initial Root Token" /root/startupOutput.txt | cut -d' ' -f4`
-export VAULT_TOKEN=vaultToken
+sed -i 's/replace_vault_token/${vaultToken}/g' /etc/systemd/system/vault-server.service
 
 # Start nomad as a service
 if [ $1 == "server" ]; then

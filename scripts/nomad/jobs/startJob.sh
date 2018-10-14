@@ -13,7 +13,7 @@ nomadIp=`/sbin/ifconfig eth1 | grep 'inet ' | sed 's/\s\s*/ /g' | cut -d' ' -f3 
 
 export NOMAD_ADDR="http://${nomadIp}:4646"
 export VAULT_ADDR=http://127.0.0.1:8200
-export VAULT_TOKEN=vaultToken
+export VAULT_TOKEN=${vaultToken}
 
 # Put buildVersion and count in consul kv store
 consul kv put "${jobName}-version" ${buildVersion}

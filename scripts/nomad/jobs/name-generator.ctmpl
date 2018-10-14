@@ -1,4 +1,4 @@
-job "name-generator" {
+job "name" {
 
   datacenters = ["dc1"]
 
@@ -12,11 +12,11 @@ job "name-generator" {
 
   }
 
-  group "webs" {
+  group "name" {
 
     count = {{ key "name-generator-count" }}
 
-    task "name-generator" {
+    task "name" {
 
       driver = "docker"
 
@@ -29,13 +29,13 @@ job "name-generator" {
       }
 
       env {
-        "CONSUL_HTTP_ADDR" = "http://172.17.0.1:8500",
+        "AGE_SERVICE_URL" = "http://172.17.0.1:${NOMAD_PORT_proxy_http}",
         "API_KEY" = "{{with secret "secret/my_api_key"}}{{.Data.my_api_key}}{{end}}"
       }
 
       service {
 
-        name = "name-generator"
+        name = "name"
 
         port = "http"
 
@@ -43,7 +43,7 @@ job "name-generator" {
 
         check {
           type     = "http"
-          name	   = "name-generator"
+          name	   = "name"
           path     = "/"
           interval = "10s"
           timeout  = "2s"
@@ -51,17 +51,37 @@ job "name-generator" {
       }
 
       resources {
-        cpu    = 500 # MHz
+        cpu    = 250 # MHz
         memory = 128 # MB
 
         network {
           mbits = 1
           port "http" {}
-          port "https" {
-            static = 443
-          }
         }
       }
     }
+
+    task "connect-proxy" {
+      driver = "raw_exec"
+
+      config {
+        command = "/usr/bin/consul"
+        args  = [
+          "connect", "proxy",
+          "-service", "name",
+          "-upstream", "age:${NOMAD_PORT_http}",
+        ]
+      }
+
+      resources {
+        cpu    = 250 # MHz
+        memory = 64 # MB
+
+        network {
+          port "http" {}
+        }
+      }
+    }
+
   }
 }

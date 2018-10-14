@@ -1,4 +1,4 @@
-job "age-generator" {
+job "age" {
 
   datacenters = ["dc1"]
 
@@ -12,11 +12,11 @@ job "age-generator" {
 
   }
 
-  group "webs" {
+  group "age" {
 
     count = {{ key "age-generator-count" }}
 
-    task "age-generator" {
+    task "age" {
 
       driver = "docker"
 
@@ -38,7 +38,7 @@ job "age-generator" {
 
         check {
           type     = "http"
-          name	   = "age-generator"
+          name	   = "age"
           path     = "/"
           interval = "10s"
           timeout  = "2s"
@@ -46,17 +46,39 @@ job "age-generator" {
       }
 
       resources {
-        cpu    = 500 # MHz
+        cpu    = 250 # MHz
         memory = 128 # MB
 
         network {
           mbits = 1
           port "http" {}
-          port "https" {
-            static = 443
-          }
         }
       }
     }
+
+    task "connect-proxy" {
+      driver = "raw_exec"
+
+      config {
+        command = "/usr/bin/consul"
+        args  = [
+          "connect", "proxy",
+          "-service", "age",
+          "-service-addr", "${NOMAD_ADDR_age_http}",
+          "-listen", ":${NOMAD_PORT_http}",
+          "-register",
+        ]
+      }
+
+      resources {
+        cpu    = 250 # MHz
+        memory = 64 # MB
+
+        network {
+          port "http" {}
+        }
+      }
+    }
+
   }
 }

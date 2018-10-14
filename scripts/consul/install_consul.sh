@@ -9,8 +9,8 @@ apt install --yes docker.io
 
 # Setup iptables to allow access to localhost from docker
 sysctl -w net.ipv4.conf.docker0.route_localnet=1
-iptables -t nat -I PREROUTING -i docker0 -d 172.17.0.1 -p tcp --dport 8500 -j DNAT --to 127.0.0.1:8500
-iptables -t filter -I INPUT -i docker0 -d 127.0.0.1 -p tcp --dport 8500 -j ACCEPT
+iptables -t nat -I PREROUTING -i docker0 -d 172.17.0.1 -p tcp -j DNAT --to 127.0.0.1
+iptables -t filter -I INPUT -i docker0 -d 127.0.0.1 -p tcp -j ACCEPT
 
 # Start install of consul and setup
 wget https://releases.hashicorp.com/consul/1.2.3/consul_1.2.3_linux_amd64.zip

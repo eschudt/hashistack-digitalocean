@@ -2,6 +2,9 @@
 Terraform to setup a consul and nomad cluster by building the number of servers and clients specified.
 It wraps them around a firewall that can only be accesses via a bastion host (ssh) and a load balancer (http)
 Uses digital ocean as a provider to create the droplets needed.
+Sets up Vault to store secrets
+
+Now also uses Consul Connect as a sidecar allocation to interact with other services
 
 It starts nomad and consul as a service and automatically connects all nodes in the cluster
 

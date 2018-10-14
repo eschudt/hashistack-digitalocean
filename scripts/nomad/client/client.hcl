@@ -4,9 +4,6 @@ log_level = "DEBUG"
 # Setup data dir
 data_dir = "/tmp/client"
 
-# Give the agent a unique name. Defaults to hostname
-#name = "nomad-client-countIndex"
-
 # Enable the client
 client {
     enabled = true
@@ -24,8 +21,3 @@ consul {
   server_auto_join    = true
   client_auto_join    = true
 }
-
-#vault {
-#  enabled = true
-#  address = "http://127.0.0.1:8200"
-#}

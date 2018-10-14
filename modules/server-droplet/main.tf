@@ -38,6 +38,11 @@ resource "digitalocean_droplet" "server" {
     destination = "/etc/systemd/system/consul-server.service"
   }
 
+  provisioner "file" {
+    source      = "${path.root}/scripts/consul/consul-connect-enable.hcl"
+    destination = ""/root/consul-connect-enable.hcl"
+  }
+
   # Nomad files
   provisioner "file" {
     source      = "${path.root}/scripts/nomad/server/server.hcl"

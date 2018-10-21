@@ -14,14 +14,14 @@ job "auth" {
 
   group "auth" {
 
-    count = {{ key "auth-count" }}
+    count = {{ key "jwt-auth-count" }}
 
     task "auth" {
 
       driver = "docker"
 
       config {
-        image = "eschudt/jwt-auth:{{ key "auth-version" }}"
+        image = "eschudt/jwt-auth:{{ key "jwt-auth-version" }}"
         advertise_ipv6_address = false
         args = [
           "-bind", "${NOMAD_PORT_http}"

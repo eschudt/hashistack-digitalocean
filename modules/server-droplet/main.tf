@@ -81,6 +81,11 @@ resource "digitalocean_droplet" "server" {
   }
 
   provisioner "file" {
+    source      = "${path.root}/scripts/nomad/jobs/jwt-auth.ctmpl"
+    destination = "/root/jwt-auth.ctmpl"
+  }
+
+  provisioner "file" {
     source      = "${path.root}/scripts/nomad/jobs/startJob.sh"
     destination = "/root/startJob.sh"
   }
